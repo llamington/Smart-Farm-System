@@ -7,8 +7,13 @@ const int loRaM0 = 12;
 const int loRaM1 = 9;
 const int rainPin = 7;
 int tips = 0;
+String loRaBuffer;
+
 void setup() {
   // put your setup code here, to run once:
+  pinMode(loRaM0, OUTPUT);
+  pinMode(loRaM1, OUTPUT);
+  pinMode(rainPin, INPUT);
   Serial.begin(9600);
   loRa.begin(9600);
   
@@ -23,5 +28,10 @@ void loop() {
     delay(500);
     Serial.println(tips);
   }
+  if(loRa.available() > 0) {
+    loRaBuffer = loRa.readString();
+  }
+  Serial.println(loRaBuffer);
+  delay(1000);
   
 }
