@@ -3,6 +3,8 @@ const int loRaM1 = 9;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  pinMode(loRaM0, OUTPUT);
+  pinMode(loRaM1, OUTPUT);
 }
 
 void loop() {
