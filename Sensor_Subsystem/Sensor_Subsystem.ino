@@ -39,7 +39,7 @@ void setup() {
   // put your setup code here, to run once:
   pinMode(loRaM0, OUTPUT);
   pinMode(loRaM1, OUTPUT);
-  pinMode(phRelay, OUTPUT);
+  //pinMode(phRelay, OUTPUT);
   pinMode(batteryTest, OUTPUT);
   phServo.attach(10);
   Serial.begin(9600);
@@ -53,7 +53,7 @@ void loop() {
   float values[] = {humidity, temperature, uvA, uvB, uvIndex, soilRelativeHumidity, soilTemperature, ph, batteryPercentage};
   digitalWrite(loRaM0, LOW);
   digitalWrite(loRaM1, LOW);
-  digitalWrite(phRelay, HIGH);
+  //digitalWrite(phRelay, HIGH);
   digitalWrite(batteryTest, LOW);
   phRaw = analogRead(phIn);
   phVoltage = analogVoltage(phRaw);
@@ -79,11 +79,12 @@ void loop() {
   temperature = bme.readTemperature();
   humidity = bme.readHumidity();
   pressure = bme.readPressure();
-  Serial.println(uvB);
+  //Serial.println(uvB);
   //Serial.println("T" + temperature + ">");
    for(int i = 0; i <= 8; i++) {
     Serial.print(startDelimiter[i]);
     Serial.print(values[i]);
+    Serial.print(">");
   } 
   
 }

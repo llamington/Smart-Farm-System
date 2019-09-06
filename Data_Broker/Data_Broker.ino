@@ -29,7 +29,7 @@ void loop() {
     Serial.println(tips);
   }
   if(loRa.available() > 0) {
-    loRaBuffer = loRa.readString();
+    loRaBuffer = loRa.readStringUntil(">");
   }
   Serial.println(loRaBuffer);
   delay(1000);
