@@ -4,6 +4,7 @@
 #include <Adafruit_VEML6075.h>
 #include <Servo.h>
 
+Adafruit_BME280 bme;
 Adafruit_VEML6075 uv = Adafruit_VEML6075();
 Servo phServo;
 const int loRaM0 = 12;
@@ -28,7 +29,11 @@ float ntcResistance;
 float soilTemperature;
 int batteryVoltageRaw;
 float batteryVoltage;
-int batteryPercentage;
+float batteryPercentage;
+float humidity;
+float pressure;
+float temperature;
+String startDelimiter[] = {"H", "T", "A", "B", "I", "M", "S", "P", "C"}; //Starting delimiter to send to through serial before value
 
 void setup() {
   // put your setup code here, to run once:
@@ -38,11 +43,14 @@ void setup() {
   pinMode(batteryTest, OUTPUT);
   phServo.attach(10);
   Serial.begin(9600);
+  bme.begin();
+  uv.begin();
   delay(2000);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  float values[] = {humidity, temperature, uvA, uvB, uvIndex, soilRelativeHumidity, soilTemperature, ph, batteryPercentage};
   digitalWrite(loRaM0, LOW);
   digitalWrite(loRaM1, LOW);
   digitalWrite(phRelay, HIGH);
@@ -62,13 +70,21 @@ void loop() {
   batteryVoltageRaw = analogRead(batteryRead);
   batteryVoltage = analogVoltage(batteryVoltageRaw);
   batteryPercentage = voltagePercentage(batteryVoltage);
-  Serial.println(batteryPercentage);
-  
+ // Serial.println(batteryPercentage);
   //Serial.println(soilRelativeHumidity);
   delay(2000);
   uvIndex = uv.readUVI();
   uvA = uv.readUVA();
   uvB = uv.readUVB();
+  temperature = bme.readTemperature();
+  humidity = bme.readHumidity();
+  pressure = bme.readPressure();
+  Serial.println(uvB);
+  //Serial.println("T" + temperature + ">");
+   for(int i = 0; i <= 8; i++) {
+    Serial.print(startDelimiter[i]);
+    Serial.print(values[i]);
+  } 
   
 }
 
@@ -84,6 +100,6 @@ float voltageDividerResistance(float x) {
 float steinhart(float x) {
   return 1/(1/298.15+(1/3950)*log((x/10*pow(10, 3))));
 }
-int voltagePercentage(float x) {
+float voltagePercentage(float x) {
   return x*100/3.25;
 }
