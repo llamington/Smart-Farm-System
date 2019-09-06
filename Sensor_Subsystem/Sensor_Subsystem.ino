@@ -34,6 +34,7 @@ float humidity;
 float pressure;
 float temperature;
 String startDelimiter[] = {"H", "T", "A", "B", "I", "M", "S", "P", "C"}; //Starting delimiter to send to through serial before value
+String value;
 
 void setup() {
   // put your setup code here, to run once:
@@ -82,9 +83,8 @@ void loop() {
   //Serial.println(uvB);
   //Serial.println("T" + temperature + ">");
    for(int i = 0; i <= 8; i++) {
-    Serial.print(startDelimiter[i]);
-    Serial.print(values[i]);
-    Serial.print(">");
+    value = String(values[i]);
+    Serial.print(startDelimiter[i] + value + ">");
   } 
   
 }
