@@ -33,6 +33,7 @@ void loop() {
     values[i] = loRa.readStringUntil('>');
     Serial.println(values[i]);
     
+    
   }
    delay(1000);
   
