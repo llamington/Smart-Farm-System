@@ -33,8 +33,8 @@ float batteryPercentage;
 float humidity;
 float pressure;
 float temperature;
-String startDelimiter[] = {"H", "T", "A", "B", "I", "M", "S", "P", "C"}; //Starting delimiter to send to through serial before value
-String value;
+char startDelimiter[] = {'H', 'T', 'A','B', 'I', 'M', 'S', 'P', 'C'}; //Starting delimiter to send to through serial before value
+String value[8];
 
 void setup() {
   // put your setup code here, to run once:
@@ -73,7 +73,6 @@ void loop() {
   batteryPercentage = voltagePercentage(batteryVoltage);
  // Serial.println(batteryPercentage);
   //Serial.println(soilRelativeHumidity);
-  delay(2000);
   uvIndex = uv.readUVI();
   uvA = uv.readUVA();
   uvB = uv.readUVB();
@@ -83,10 +82,12 @@ void loop() {
   //Serial.println(uvB);
   //Serial.println("T" + temperature + ">");
    for(int i = 0; i <= 8; i++) {
-    value = String(values[i]);
-    Serial.print(startDelimiter[i] + value + ">");
-  } 
-  
+    //Serial.println(values[i]);
+    Serial.print(values[i]);
+    value[i] = String(values[i]);
+    Serial.print(startDelimiter[i] + value[i] + '>');
+  }
+  delay(2000);
 }
 
 float analogVoltage(int x) {
