@@ -6,7 +6,9 @@
 
 ## Programming Board:
 1. Insert FTDI board
+
 ..* If Data Broker select 5V
+
 ..* If Sensor Subsystem select 3.3V
 2. Ensure Jumpers are selected to 'PROG' mode for programming
 3. Ensure Arduino IDE is 
