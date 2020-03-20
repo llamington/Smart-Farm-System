@@ -3,11 +3,28 @@
 
 SoftwareSerial loRa(5, 6);
 
+float uvIndex;
+float ph;
+float phVoltage;
+float uvA;
+float uvB;
+float soilTemperature;
+float batteryPercentage;
+float humidity;
+float pressure;
+float temperature;
+float soilRelativeHumidity;
 const int loRaM0 = 12;
 const int loRaM1 = 9;
 const int rainPin = 7;
 int tips = 0;
 String loRaBuffer;
+String stringValues[8];
+String floatValues[8];
+char startDelimiter[] = {'H', 'T', 'A', 'B', 'I', 'M', 'S', 'P', 'C'};
+float values[] = {humidity, temperature, uvA, uvB, uvIndex, soilRelativeHumidity, soilTemperature, ph, batteryPercentage};
+String hello;
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -16,6 +33,8 @@ void setup() {
   pinMode(rainPin, INPUT);
   Serial.begin(9600);
   loRa.begin(9600);
+  delay(2000);
+  Serial.print("Initialised");
   
 }
 
@@ -28,10 +47,17 @@ void loop() {
     delay(500);
     Serial.println(tips);
   }
-  if(loRa.available() > 0) {
-    loRaBuffer = loRa.readStringUntil(">");
+  while(loRa.available() > 0) {
+    Serial.println(loRa.readString());
   }
-  Serial.println(loRaBuffer);
-  delay(1000);
-  
+  /* while(loRa.available() > 0) {
+      for(int i = 0; i <= 8; i++) {
+       while(loRa.read() != startDelimiter[i]) {
+        loRa.read();
+    }
+    stringValues[i] = loRa.readStringUntil('>');
+    Serial.println(stringValues[i]);
+  }
+   delay(1000);
+} */
 }
