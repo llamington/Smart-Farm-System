@@ -13,10 +13,10 @@
 4. Ensure Arduino IDE COM port is correctly selected
 5. Ensure 'Board:' is set to:
    * 'Arduino Pro or Pro Mini' (Sensor Subsystem)
-   * Arduino ... (Data Broker)
+   * 'Arduino/Genuino Uno'  (Data Broker)
 6. Ensure 'Processor:' is set to 'ATmega328P (3.3V, 8MHz)' for Data Broker
 7. Ensure 'Programmer:' is set to 'AVRISP mkII'
-8. The board's reset button may have to be pressed
+8. The board's reset button may have to be pressed while pressing 'Upload Sketch'
 ## Documentation
 * [Executive Summary](https://docs.google.com/document/d/1e9hxD1EgtwhdI2ElwgMCJGJI10CNnTmsidURxNL1KP8/edit?usp=sharing)
 * [Report](https://docs.google.com/document/d/1hib91_5W7olT_gy1vOQjhlBxqv88XaVicgFhEBmSrUQ/edit?usp=sharing)
