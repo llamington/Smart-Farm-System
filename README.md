@@ -14,8 +14,9 @@
 5. Ensure 'Board:' is set to:
    * 'Arduino Pro or Pro Mini' (Sensor Subsystem)
    * Arduino ... (Data Broker)
-6. Ensure 'Programmer:' is set to 'AVRISP mkII'
-7. The board's reset button may have to be pressed
+6. Ensure 'Processor:' is set to 'ATmega328P (3.3V, 8MHz)' for Data Broker
+7. Ensure 'Programmer:' is set to 'AVRISP mkII'
+8. The board's reset button may have to be pressed
 ## Documentation
 * [Executive Summary](https://docs.google.com/document/d/1e9hxD1EgtwhdI2ElwgMCJGJI10CNnTmsidURxNL1KP8/edit?usp=sharing)
 * [Report](https://docs.google.com/document/d/1hib91_5W7olT_gy1vOQjhlBxqv88XaVicgFhEBmSrUQ/edit?usp=sharing)
@@ -23,4 +24,7 @@
 ## Datasheets
 * [Bosche BME280](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf)
 * [Ebyte E22-900T30S](http://www.ebyte.com/en/downpdf.aspx?id=485)
+## Flashing Bootloader
+
 ## Notes
+* Sensor Subsystem is currently sending strings over serial. The data is innacurate but readable
