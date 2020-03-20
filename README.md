@@ -22,5 +22,5 @@
 * [Bill of Materials](https://docs.google.com/spreadsheets/d/1ZyjLawHQprvmQZ0Cbc97jp_R3VOazbsFH6kYA6FA8nM/edit?usp=sharing)
 ## Datasheets
 * [Bosche BME280](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf)
-* Ebyte E22-900T30S
+* [Ebyte E22-900T30S](http://www.ebyte.com/en/downpdf.aspx?id=485)
 ## Notes
