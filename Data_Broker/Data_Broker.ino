@@ -23,6 +23,8 @@ String stringValues[8];
 String floatValues[8];
 char startDelimiter[] = {'H', 'T', 'A', 'B', 'I', 'M', 'S', 'P', 'C'};
 float values[] = {humidity, temperature, uvA, uvB, uvIndex, soilRelativeHumidity, soilTemperature, ph, batteryPercentage};
+char receivedArray[100];
+String received;
 String hello;
 
 
@@ -48,8 +50,12 @@ void loop() {
     Serial.println(tips);
   }
   while(loRa.available() > 0) {
-    Serial.println(loRa.readString());
+    received = loRa.readString();
+    Serial.println(received);
   }
+  startString = received.indexOf('H'); // finds index of starting delimiter
+  endString = received.indexOf('>', startString) //reads from the first string until first delimiter
+  string1 = received.substring(startString, endString)
   /* while(loRa.available() > 0) {
       for(int i = 0; i <= 8; i++) {
        while(loRa.read() != startDelimiter[i]) {
