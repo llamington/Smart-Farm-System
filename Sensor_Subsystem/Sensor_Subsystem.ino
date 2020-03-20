@@ -51,7 +51,6 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  float values[] = {humidity, temperature, uvA, uvB, uvIndex, soilRelativeHumidity, soilTemperature, ph, batteryPercentage};
   digitalWrite(loRaM0, LOW);
   digitalWrite(loRaM1, LOW);
   //digitalWrite(phRelay, HIGH);
@@ -81,9 +80,10 @@ void loop() {
   pressure = bme.readPressure();
   //Serial.println(uvB);
   //Serial.println("T" + temperature + ">");
+  float values[] = {humidity, temperature, uvA, uvB, uvIndex, soilRelativeHumidity, soilTemperature, ph, batteryPercentage};
    for(int i = 0; i <= 8; i++) {
     //Serial.println(values[i]);
-    Serial.print(values[i]);
+    //Serial.print(values[i]);
     value[i] = String(values[i]);
     Serial.print(startDelimiter[i] + value[i] + '>');
   }
