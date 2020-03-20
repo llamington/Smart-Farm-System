@@ -28,3 +28,4 @@
 
 ## Notes
 * Sensor Subsystem is currently sending strings over serial. The data is innacurate but readable
+* Charging the battery by USB consists of plugging the battery in to 'BAT' and plugging the USB into a source.
