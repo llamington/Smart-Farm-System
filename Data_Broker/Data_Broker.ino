@@ -53,7 +53,6 @@ void loop() {
   }
   while(loRa.available() > 0) {
     received = loRa.readString();
-    Serial.println(received);
   }
   for(int i = 0; i <= 8; i++) {
     startString = received.indexOf(startDelimiter[i]); // finds index of starting delimiter
@@ -61,7 +60,9 @@ void loop() {
     receivedArray[i] = received.substring(startString+1, endString);
     Serial.println(receivedArray[i]);
   }
-  
+  while(loRa.available() <= 0) {
+    delay(1);
+  }
   /* while(loRa.available() > 0) {
       for(int i = 0; i <= 8; i++) {
        while(loRa.read() != startDelimiter[i]) {
