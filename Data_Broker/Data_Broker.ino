@@ -14,16 +14,6 @@ byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 EthernetClient client;
 
 Adafruit_MQTT_Client mqtt(&client, "io.adafruit.com", 1883, mqttUsername, "4a179569d20d440988bc9cb7d1a75a8f");
-/*
-Adafruit_MQTT_Publish airHumidity = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/air-humidity");
-Adafruit_MQTT_Publish airTemperature = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/air-temperature");
-Adafruit_MQTT_Publish pH = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/soil-ph");
-Adafruit_MQTT_Publish batteryPercentage = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/battery-percentage");
-Adafruit_MQTT_Publish soilHumidity = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/soil-humidity");
-Adafruit_MQTT_Publish soilTemperature = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/soil-temperature");
-Adafruit_MQTT_Publish uvA = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-a");
-Adafruit_MQTT_Publish uvB = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-b");
-Adafruit_MQTT_Publish uvIndex = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-index"); */
 Adafruit_MQTT_Publish publishArray[] = {Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/air-humidity"),
 Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/air-temperature"), Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-a"),
 Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-b"), Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-index"),
