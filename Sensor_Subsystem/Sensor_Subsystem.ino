@@ -2,11 +2,9 @@
 #include <Adafruit_BME280.h>
 #include <Wire.h>
 #include <Adafruit_VEML6075.h>
-#include <Servo.h>
 
 Adafruit_BME280 bme;
 Adafruit_VEML6075 uv = Adafruit_VEML6075();
-Servo phServo;
 const int loRaM0 = 12;
 const int loRaM1 = 9;
 const int phRelay = 2;
@@ -42,9 +40,8 @@ void setup() {
   pinMode(loRaM1, OUTPUT);
   //pinMode(phRelay, OUTPUT);
   pinMode(batteryTest, OUTPUT);
-  phServo.attach(10);
   Serial.begin(9600);
-  bme.begin();
+  bme.begin(0x76);
   uv.begin();
   delay(2000);
 }
