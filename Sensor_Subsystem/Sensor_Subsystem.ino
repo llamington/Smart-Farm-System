@@ -64,9 +64,12 @@ void loop() {
   soilRelativeHumidity = map(soilMoistureRaw, 855, 385, 0, 100);
   //Serial.println(soilMoistureRaw);
   ntcRaw = analogRead(soilTemperatureIn);
+  Serial.println("NTC Raw = " + String(ntcRaw));
   ntcVoltage = analogVoltage(ntcRaw);
+  Serial.println("NTC Voltage = " + String(ntcVoltage));
   ntcResistance = voltageDividerResistance(ntcVoltage);
-  soilTemperature = steinhart(ntcVoltage);
+  Serial.println("NTC Resistance = " + String(ntcResistance));
+  soilTemperature = steinhart(ntcResistance);
   batteryVoltageRaw = analogRead(batteryRead);
   batteryVoltage = analogVoltage(batteryVoltageRaw);
   batteryPercentage = voltagePercentage(batteryVoltage);
@@ -91,17 +94,17 @@ void loop() {
 }
 
 float analogVoltage(int x) {
-  return x*3.3/1023;
+  return x*3.3/1023.0;
 }
 float voltageToPh(float x) {
   return 29.347*sq(x)-21.914*x+7.4785;
 }
 float voltageDividerResistance(float x) {
-  return (3.3*pow(10, 4))/x-pow(10, 3);
+  return (x*10.0E3)/(3.3-x);
 }
 float steinhart(float x) {
-  return 1/(1/298.15+(1/3950)*log((x/10*pow(10, 3))));
+  return 1.0/((1.0/298.15)-(1.0/3950.0)*log((x/10.0E3))) - 273.15;
 }
 float voltagePercentage(float x) {
-  return x*100/3.25;
+  return x*100.0/3.25;
 }
