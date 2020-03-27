@@ -64,11 +64,8 @@ void loop() {
   soilRelativeHumidity = map(soilMoistureRaw, 855, 385, 0, 100);
   //Serial.println(soilMoistureRaw);
   ntcRaw = analogRead(soilTemperatureIn);
-  Serial.println("NTC Raw = " + String(ntcRaw));
   ntcVoltage = analogVoltage(ntcRaw);
-  Serial.println("NTC Voltage = " + String(ntcVoltage));
   ntcResistance = voltageDividerResistance(ntcVoltage);
-  Serial.println("NTC Resistance = " + String(ntcResistance));
   soilTemperature = steinhart(ntcResistance);
   batteryVoltageRaw = analogRead(batteryRead);
   batteryVoltage = analogVoltage(batteryVoltageRaw);
