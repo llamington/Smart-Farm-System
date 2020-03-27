@@ -14,6 +14,7 @@ byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 EthernetClient client;
 
 Adafruit_MQTT_Client mqtt(&client, "io.adafruit.com", 1883, mqttUsername, "4a179569d20d440988bc9cb7d1a75a8f");
+/*
 Adafruit_MQTT_Publish airHumidity = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/air-humidity");
 Adafruit_MQTT_Publish airTemperature = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/air-temperature");
 Adafruit_MQTT_Publish pH = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/soil-ph");
@@ -22,8 +23,12 @@ Adafruit_MQTT_Publish soilHumidity = Adafruit_MQTT_Publish(&mqtt, mqttUsername "
 Adafruit_MQTT_Publish soilTemperature = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/soil-temperature");
 Adafruit_MQTT_Publish uvA = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-a");
 Adafruit_MQTT_Publish uvB = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-b");
-Adafruit_MQTT_Publish uvIndex = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-index");
-Adafruit_MQTT_Publish[] = {
+Adafruit_MQTT_Publish uvIndex = Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-index"); */
+Adafruit_MQTT_Publish publishArray[] = {Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/air-humidity"),
+Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/air-temperature"), Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-a"),
+Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-b"), Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/ultraviolet-index"),
+Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/soil-humidity"), Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/soil-temperature"),
+Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/soil-ph"), Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/battery-percentage")};
 #define halt(s) { Serial.println(F( s )); while(1);  }
 
 
@@ -32,8 +37,8 @@ const byte loRaM1 = 9;
 const byte rainPin = 7;
 unsigned int tips = 0;
 const char startDelimiter[] = {'H', 'T', 'A', 'B', 'I', 'M', 'S', 'P', 'C'};
-// float values[] = {humidity, temperature, uvA, uvB, uvIndex, soilRelativeHumidity, soilTemperature, ph, batteryPercentage};
-float receivedArray[100];
+const String address[] = {"air-humidity", "air-temperature", "ultraviolet-a", "ultraviolet-b", "ultraviolet-index", "soil-humidity", "soil-temperature", "soil-ph", "battery-percentage"};
+float receivedArray[9];
 // float floatReceivedArray[100];
 
 String received;
@@ -64,22 +69,18 @@ void loop() {
     delay(500);
     Serial.println(tips);
   }
-  while(loRa.available() > 0) {
+  if(loRa.available() > 0) {
     received = loRa.readString();
-  }
-  for(int i = 0; i <= 8; i++) {
-    startString = received.indexOf(startDelimiter[i]); // finds index of starting delimiter
-    //endString = received.indexOf('>', startString); //reads from the first string until first delimiter
-    receivedArray[i] = received.substring(startString+1, received.indexOf('>', startString)).toFloat();
-    //floatReceivedArray[i] = receivedArray[i].toFloat();
-    Serial.println(receivedArray[i]);
-  }
-  while(loRa.available() <= 0) {
-    delay(500);
-    if(! mqtt.ping()) {
-      mqtt.disconnect();
+    for(int i = 0; i <= 8; i++) {
+      startString = received.indexOf(startDelimiter[i]); // finds index of starting delimiter
+      //endString = received.indexOf('>', startString); //reads from the first string until first delimiter
+      receivedArray[i] = received.substring(startString+1, received.indexOf('>', startString)).toFloat();
+      //floatReceivedArray[i] = receivedArray[i].toFloat();
+      Serial.println(address[i] + ": " + receivedArray[i]);
+      publishArray[i].publish(receivedArray[i]);
     }
   }
+  delay(100);
 }
 void MQTT_connect() {
   int8_t ret;
