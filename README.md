@@ -24,7 +24,17 @@
 ## Datasheets
 * [Bosch BME280](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf)
 * [Ebyte E22-900T30S](http://www.ebyte.com/en/downpdf.aspx?id=485)
+* [Atmel ATMEGA328P](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf)
+* [Ai-Thinker ESP-12F](http://file.elecfans.com/web1/M00/91/F3/o4YBAFzdEFaAKJx0ABJWYqWPp88163.pdf?filename=ESP-12F%28ESP8266MOD%29_Ai-Thinker.pdf)
 ## Flashing Bootloader
+1. Install [Zadig](https://zadig.akeo.ie/)
+2. Plug USPasp into computer, with J21 placed in 3.3V while the other jumpers are empty
+3. Ensure 'Options>List all Devices' is selected
+4. Select 'USBasp' within the USB selection box
+5. Replace driver with 'libusb-win32'
+6. Install [AVRDUDESS](https://blog.zakkemble.net/avrdudess-a-gui-for-avrdude/)
+7. 'Detect' MCU and ensure ATMEGA328P is detected
+8.
 
 ## Notes
 * Sensor Subsystem is currently sending strings over serial. The data is innacurate but readable
