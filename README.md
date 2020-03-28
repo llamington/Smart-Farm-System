@@ -4,7 +4,7 @@
 
 [Sensor Subsystem Board](https://easyeda.com/lissington4/smart-farm-schematic)
 
-## Programming Board:
+## Programming Board
 1. Insert FTDI board
    * If Data Broker select 5V
    * If Sensor Subsystem select 3.3V
@@ -40,7 +40,6 @@
 11. Set bits:
   * For Data Broker: L=0xFF, H=0xDE, E=0xFD, LB=0x0F
   * For Sensor Subsystem, L=0xFF, H=0xDA, E=0xFD, LB=0x0F
-
 ## Notes
 * Sensor Subsystem is currently sending strings over serial. The data is innacurate but readable
 * Charging the battery by USB consists of plugging the battery in to 'BAT' and plugging the USB into a source.
