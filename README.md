@@ -45,3 +45,4 @@
 * Charging the battery by USB consists of plugging the battery in to 'BAT' and plugging the USB into a source.
 * If boards not in sync then ensure battery holder is making connection
 * If BME280 is not soldered directly to the board the address may have to be changed from 0x76
+* Sensor Subsystem draws 2A at 3.7V
