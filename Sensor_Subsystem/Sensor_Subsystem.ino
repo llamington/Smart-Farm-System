@@ -7,7 +7,6 @@ Adafruit_BME280 bme;
 Adafruit_VEML6075 uv = Adafruit_VEML6075();
 const int loRaM0 = 12;
 const int loRaM1 = 9;
-const int phRelay = 2;
 const int phIn = A0;
 const int soilMoistureIn = A2;
 const int soilTemperatureIn = A1;
@@ -84,7 +83,7 @@ void loop() {
     value[i] = String(values[i]);
     Serial.print(startDelimiter[i] + value[i] + '>');
   }
-  delay(2000);
+  delay(60000);
 }
 
 float analogVoltage(int x) {

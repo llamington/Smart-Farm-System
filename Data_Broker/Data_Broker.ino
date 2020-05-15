@@ -60,7 +60,9 @@ void loop() {
     Serial.println(tips);
   }
   if(loRa.available() > 0) {
+    delay(50);
     received = loRa.readString();
+    Serial.println(received);
     for(int i = 0; i <= 8; i++) {
       startString = received.indexOf(startDelimiter[i]); // finds index of starting delimiter
       //endString = received.indexOf('>', startString); //reads from the first string until first delimiter
