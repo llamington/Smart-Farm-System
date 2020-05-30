@@ -15,6 +15,7 @@ const int soilMoistureIn = A2;
 const int soilTemperatureIn = A1;
 const int batteryTest = 3;
 const int batteryRead = A3;
+const int indicatorLed = 7;
 int soilMoistureRaw;
 float soilRelativeHumidity;
 int phRaw;
@@ -45,6 +46,7 @@ void setup() {
   pinMode(loRaM1, OUTPUT);
   //pinMode(phRelay, OUTPUT);
   pinMode(batteryTest, OUTPUT);
+  pinMode(indicatorLed, OUTPUT);
   bme.begin(0x76);
   uv.begin();
   delay(2000);
@@ -53,6 +55,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  digitalWrite(indicatorLed, HIGH);
   digitalWrite(loRaM0, LOW);
   digitalWrite(loRaM1, LOW);
   //digitalWrite(phRelay, HIGH);
