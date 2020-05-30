@@ -1,7 +1,10 @@
+#include <SoftwareSerial.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <Wire.h>
 #include <Adafruit_VEML6075.h>
+
+SoftwareSerial loRa(5, 6);
 
 Adafruit_BME280 bme;
 Adafruit_VEML6075 uv = Adafruit_VEML6075();
@@ -13,7 +16,7 @@ const int soilTemperatureIn = A1;
 const int batteryTest = 3;
 const int batteryRead = A3;
 int soilMoistureRaw;
-int soilRelativeHumidity;
+float soilRelativeHumidity;
 int phRaw;
 float uvIndex;
 float ph;
@@ -31,18 +34,21 @@ float humidity;
 float pressure;
 float temperature;
 char startDelimiter[] = {'H', 'T', 'A','B', 'I', 'M', 'S', 'P', 'C'}; //Starting delimiter to send to through serial before value
-String value[8];
+String value[9];
 
 void setup() {
   // put your setup code here, to run once:
+  Serial.begin(9600);
+  Serial.println(F("Initialising..."));
+  loRa.begin(9600);
   pinMode(loRaM0, OUTPUT);
   pinMode(loRaM1, OUTPUT);
   //pinMode(phRelay, OUTPUT);
   pinMode(batteryTest, OUTPUT);
-  Serial.begin(9600);
   bme.begin(0x76);
   uv.begin();
   delay(2000);
+  Serial.println(F("Initialised"));
 }
 
 void loop() {
@@ -77,13 +83,14 @@ void loop() {
   //Serial.println(uvB);
   //Serial.println("T" + temperature + ">");
   float values[] = {humidity, temperature, uvA, uvB, uvIndex, soilRelativeHumidity, soilTemperature, ph, batteryPercentage};
-   for(int i = 0; i <= 8; i++) {
+   for(int i = 0; i < 9; i++) {
     //Serial.println(values[i]);
     //Serial.print(values[i]);
-    value[i] = String(values[i]);
-    Serial.print(startDelimiter[i] + value[i] + '>');
+    value[i] = String(values[i], 2);
+    Serial.println(startDelimiter[i] + value[i] + '>');
+    loRa.print(startDelimiter[i] + value[i] + '>');
   }
-  delay(60000);
+  delay(10000);
 }
 
 float analogVoltage(int x) {
