@@ -47,3 +47,4 @@
 * If BME280 is not soldered directly to the board the address may have to be changed from 0x76
 * Sensor Subsystem draws 2A at 3.7V
 * Power Switch of Sensor Subsysytem not functional. If placed in 'off' the battery must be plugged in again
+* If showing 'Ini' in serial output then I2C is not functioning
