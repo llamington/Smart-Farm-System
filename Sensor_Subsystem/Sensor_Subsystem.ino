@@ -89,11 +89,11 @@ void loop() {
    for(int i = 0; i < 9; i++) {
     //Serial.println(values[i]);
     //Serial.print(values[i]);
-    value[i] = String(values[i], 2);
+    value[i] = String(values[i], 1);
     Serial.println(startDelimiter[i] + value[i] + '>');
     loRa.print(startDelimiter[i] + value[i] + '>');
   }
-  delay(10000);
+  delay(60000);
 }
 
 float analogVoltage(int x) {

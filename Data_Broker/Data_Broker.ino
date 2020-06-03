@@ -1,3 +1,4 @@
+#include <MemoryFree.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
 #include "SoftwareSerial.h"
@@ -60,7 +61,8 @@ void loop() {
     Serial.println(tips);
   }
   if(loRa.available() > 0) {
-    delay(50);
+    delay(500);
+    Serial.println(loRa.available());
     received = loRa.readString();
     Serial.println(received);
     for(int i = 0; i <= 8; i++) {
@@ -70,6 +72,8 @@ void loop() {
       //floatReceivedArray[i] = receivedArray[i].toFloat();
       Serial.println(address[i] + ": " + receivedArray[i]);
       publishArray[i].publish(receivedArray[i]);
+      Serial.print("Free Memory: ");
+      Serial.println(freeMemory());
     }
   }
   delay(100);
