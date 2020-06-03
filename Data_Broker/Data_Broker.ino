@@ -1,3 +1,4 @@
+#include <SD.h>
 #include <MemoryFree.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
@@ -26,15 +27,14 @@ Adafruit_MQTT_Publish(&mqtt, mqttUsername "/feeds/soil-ph"), Adafruit_MQTT_Publi
 const byte loRaM0 = 12;
 const byte loRaM1 = 9;
 const byte rainPin = 7;
+const int chipSelect = 4;
 unsigned int tips = 0;
 const char startDelimiter[] = {'H', 'T', 'A', 'B', 'I', 'M', 'S', 'P', 'C'};
 const String address[] = {"air-humidity", "air-temperature", "ultraviolet-a", "ultraviolet-b", "ultraviolet-index", "soil-humidity", "soil-temperature", "soil-ph", "battery-percentage"};
 float receivedArray[9];
-// float floatReceivedArray[100];
 
 String received;
 byte startString;
-//int endString;
 
 
 void setup() {
@@ -45,6 +45,7 @@ void setup() {
   Serial.begin(9600);
   loRa.begin(9600);
   Ethernet.begin(mac);
+  SD.begin(chipSelect);
   delay(2000);
   Serial.print(F("Initialised"));
   
@@ -55,6 +56,7 @@ void loop() {
   MQTT_connect();
   digitalWrite(loRaM0, LOW);
   digitalWrite(loRaM1, LOW);
+  File dataFile = SD.open("datalog.txt", FILE_WRITE);
   if(digitalRead(rainPin)) {
     tips++;
     delay(500);
@@ -62,19 +64,26 @@ void loop() {
   }
   if(loRa.available() > 0) {
     delay(500);
+    if(dataFile){
+      dataFile.print("Bytes in buffer: ");
+      dataFile.println(loRa.available());
+      dataFile.print("Free memory: ");
+      dataFile.println(freeMemory());
+      for(int i = 0; i <= 8; i++) {
+          dataFile.println(address[i] + ": " + receivedArray[i]);
+      }
+    }
     Serial.println(loRa.available());
     received = loRa.readString();
     Serial.println(received);
     for(int i = 0; i <= 8; i++) {
       startString = received.indexOf(startDelimiter[i]); // finds index of starting delimiter
-      //endString = received.indexOf('>', startString); //reads from the first string until first delimiter
       receivedArray[i] = received.substring(startString+1, received.indexOf('>', startString)).toFloat();
-      //floatReceivedArray[i] = receivedArray[i].toFloat();
       Serial.println(address[i] + ": " + receivedArray[i]);
       publishArray[i].publish(receivedArray[i]);
-      Serial.print("Free Memory: ");
-      Serial.println(freeMemory());
     }
+    Serial.print(F("Free Memory: "));
+    Serial.println(freeMemory());
   }
   delay(100);
 }
