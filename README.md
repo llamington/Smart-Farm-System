@@ -49,3 +49,7 @@
 * Power Switch of Sensor Subsysytem not functional. If placed in 'off' the battery must be plugged in again
 * If showing 'Ini' in serial output then I2C is not functioning
 * Antenna must be plugged in
+
+
+* Adjust voltage divider for PV
+* Solar MOSFET wrong way
