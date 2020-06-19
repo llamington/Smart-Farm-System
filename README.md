@@ -53,3 +53,4 @@
 
 * Adjust voltage divider for PV
 * Solar MOSFET wrong way
+* ATSAMD21G18
