@@ -93,6 +93,13 @@ void loop() {
     Serial.println(startDelimiter[i] + value[i] + '>');
     loRa.print(startDelimiter[i] + value[i] + '>');
   }
+  digitalWrite(indicatorLed, LOW);
+  delay(100);
+  digitalWrite(indicatorLed, HIGH);
+  delay(100);
+  digitalWrite(indicatorLed, LOW);
+  delay(100);
+  digitalWrite(indicatorLed, HIGH);
   delay(60000);
 }
 
