@@ -9,7 +9,11 @@ class Database:
 
     def insert_to_db(self, df: pd.DataFrame):
         """inserts dataframe to sql table"""
-        df.to_sql('sensor_data', self.engine, index=False)
+        df.to_sql('sensor_data', self.engine, index=False, if_exists='append')
+
+    def select_days_prior(self, num_days):
+        sql_str = f'''SELECT * FROM sensor_data
+            WHERE DATE BETWEEN date_time(now(),INTERVAL {num_days} DAY) AND now();'''
 
 
 if __name__ == '__main__':
