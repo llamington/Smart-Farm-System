@@ -4,7 +4,7 @@
 
 SoftwareSerial loRa(5, 6);
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-char server[] = "192.168.1.11";
+char server[] = "192.168.1.9";
 
 EthernetClient client;
 
@@ -13,12 +13,6 @@ const byte loRaM0 = 3;
 const byte loRaM1 = 9;
 const byte rainPin = 7;
 unsigned int tips = 0;
-
-IPAddress ip(192,168,1,254);
-byte gateway[] = { 
-  150,101,0,4 }; // internet access via router
-byte subnet[] = { 
-  255, 255, 255, 0 }; //subnet mask
 
 String received;
 byte startString;
@@ -34,7 +28,7 @@ void setup() {
     ; // wait for serial port to connect. Needed for native USB port only
   }
   loRa.begin(9600); 
-  Ethernet.begin(mac, ip, gateway, subnet);
+  Ethernet.begin(mac);
   delay(2000);
   Serial.print(F("Initialised")); 
   
@@ -50,24 +44,23 @@ void loop() {
     Serial.println(tips);
   }
   if(loRa.available()) {
-    Serial.print("hello");
     delay(500);
     Serial.println(loRa.available());
     received = loRa.readString();
     Serial.println(received);
-    /* if (client.connect(server, 5000)) {
-      client.print("GET /?data=");
+     if (client.connect(server, 5000)) {
+      client.print(F("GET /?data="));
       client.print(received);
-      client.println(" HTTP/1.1");
-      client.println("Host: 192.168.1.11");
-      client.println("Connection: Close");
+      client.println(F(" HTTP/1.1"));
+      client.println(F("Host: 192.168.1.11"));
+      client.println(F("Connection: Close"));
       client.println();
       client.println();
       client.stop();
-      Serial.println("Sent Request");
+      Serial.println(F("Sent Request"));
     }
     else {
-      Serial.println("Connection Failed");
-    } */
+      Serial.println(F("Connection Failed"));
+    } 
   } 
 }
