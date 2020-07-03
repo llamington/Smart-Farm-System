@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 import re
 import pandas as pd
 from database import Database
@@ -51,5 +51,15 @@ def dashboard():
     return render_template('dashboard.html')
 
 
+@app.route('/api/sensor_data')
+def get_sensor_data():
+    """fetches sensor data from the database"""
+    column = request.args.get('column')
+    period = request.args.get('period')
+    df = db.select_days_prior(column, period)
+    df['date_time'] = df['date_time'].dt.strftime('%Y-%m-%d')
+    data_list = df[column].to_list()
+    date_time_list = df['date_time'].to_list()
+    return jsonify({'data_list': data_list, 'date_time_list': date_time_list})
 # if __name__ == 'main':
 #     app.run(host='0.0.0.0')

@@ -11,9 +11,11 @@ class Database:
         """inserts dataframe to sql table"""
         df.to_sql('sensor_data', self.engine, index=False, if_exists='append')
 
-    def select_days_prior(self, num_days):
-        sql_str = f'''SELECT * FROM sensor_data
-            WHERE DATE BETWEEN date_time(now(),INTERVAL {num_days} DAY) AND now();'''
+    def select_days_prior(self, column, num_days):
+        sql_str = f'''SELECT {column}, date_time FROM sensor_data
+            WHERE date_time BETWEEN date_sub(now(),INTERVAL {num_days} DAY) AND now();'''
+        selected_days = pd.read_sql_query(sql_str, self.engine, parse_dates=['date_time'])
+        return selected_days
 
 
 if __name__ == '__main__':
