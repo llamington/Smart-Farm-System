@@ -61,5 +61,11 @@ def get_sensor_data():
     data_list = df[column].to_list()
     date_time_list = df['date_time'].to_list()
     return jsonify({'data_list': data_list, 'date_time_list': date_time_list})
+
+
+@app.route('/api/sensors_geojson')
+def sensors_geojson():
+    sensor_geodict = db.get_sensor_geodict()
+    return jsonify(sensor_geodict)
 # if __name__ == 'main':
 #     app.run(host='0.0.0.0')

@@ -17,6 +17,26 @@ class Database:
         selected_days = pd.read_sql_query(sql_str, self.engine, parse_dates=['date_time'])
         return selected_days
 
+    def get_sensor_geodict(self):
+        df = pd.read_sql_table('sensors', self.engine, index_col='sensor_id')
+        geodict = {
+            "type": "FeatureCollection",
+            "features": []
+        }
+        for index, data in df.iterrows():
+            geodict['features'].append({
+                'type': 'Feature',
+                'properties': {
+                    'id': index
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [data['longitude'], data['latitude']]
+                }
+            })
+        return geodict
+
+
 
 if __name__ == '__main__':
     database = Database('mysql://smart-farm-system.covlfra3u7yf.ap-southeast-2.rds.amazonaws.com/smart_farm_system')

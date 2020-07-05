@@ -5,9 +5,37 @@
     <title>Dashboard</title>
     <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/Chart.bundle.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-grid.css') }}">
+    <style>
+        .leaflet-retina .leaflet-control-layers-toggle {
+            background-image: url({{ url_for('static', filename='images/layers-2x.png') }});
+            }
+        .leaflet-control-layers-toggle {
+            background-image: url({{ url_for('static', filename='images/layers.png') }});
+            }
+        .leaflet-default-icon-path {
+	        background-image: url({{ url_for('static', filename='images/marker-icon.png') }});
+	        }
+    </style>
 </head>
 <body>
-    <canvas id="chart1"></canvas>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div id="sensor_map" style="height: 200px"></div>
+            </div>
+            <div class="col-6">
+                <canvas id="chart1"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
 </html>
