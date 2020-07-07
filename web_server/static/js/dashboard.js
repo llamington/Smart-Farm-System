@@ -1,30 +1,28 @@
-get_sensor_data = (column, period) => {
+get_sensor_data = (period) => {
     return $.ajax({
         url: '/api/sensor_data',
         dataType: 'json',
         type: 'GET',
         data: {
-            column: column,
             period: period
         }
     })
 }
-temp_promise = get_sensor_data('air_temperature', 7)
-temp_promise.done((data) => {insert_chart('#chart1', data)});
-
-insert_chart = (chart_div, json_data) => {
+get_sensor_data(7).done((data) => {insert_line_chart('#air_temperature', data, 'air_temperature')});
+get_sensor_data(7).done((data) => {insert_line_chart('#air_humidity', data, 'air_humidity')})
+get_sensor_data(7).done((data) => {insert_line_chart('#soil_humidity', data, 'soil_humidity')})
+insert_line_chart = (chart_div, json_data, category) => {
     new Chart($(chart_div)[0].getContext('2d'), {
         // The type of chart we want to create
         type: 'line',
-
         // The data for our dataset
         data: {
-            labels: json_data['date_time_list'],
+            labels: json_data['data']['date_time'],
             datasets: [{
-                label: 'Air Temperature',
+                label: category,
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: json_data['data_list']
+                data: json_data['data'][category]
             }]
         },
 
@@ -32,10 +30,33 @@ insert_chart = (chart_div, json_data) => {
         options: {}
     });
 }
+insert_gauge_chart = (chart_div, json_data, category) => {
+    new Chart($(chart_div)[0].getContext('2d'), {
+        type: 'doughnut',
+
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May"],
+            datasets: [{
+                label: "My First dataset",
+                backgroundColor: ['rgb(0, 99, 132)', 'green', 'red', 'yellow', 'orange'],
+                borderColor: '#fff',
+                data: [5, 10, 5, 2, 20],
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            circumference: 1 * Math.PI,
+            rotation: 1 * Math.PI,
+            cutoutPercentage: 90
+        }
+    })
+}
 class SensorMap {
     constructor(map_div) {
         console.log(map_div)
-        this.sensor_map = L.map(map_div).setView([51.505, -0.09], 13)
+        this.sensor_map = L.map(map_div).setView([-44.3970, 171.2550], 20)
         this.tile_layer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         maxZoom: 18,
         id: 'baileyl/ckc6sxwfg1leg1hqd7jw7xmyf',

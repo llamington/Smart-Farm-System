@@ -54,13 +54,13 @@ def dashboard():
 @app.route('/api/sensor_data')
 def get_sensor_data():
     """fetches sensor data from the database"""
-    column = request.args.get('column')
     period = request.args.get('period')
-    df = db.select_days_prior(column, period)
+    df = db.select_days_prior(period)
     df['date_time'] = df['date_time'].dt.strftime('%Y-%m-%d')
-    data_list = df[column].to_list()
-    date_time_list = df['date_time'].to_list()
-    return jsonify({'data_list': data_list, 'date_time_list': date_time_list})
+    data_dict = {}
+    for column in df:
+        data_dict[column] = df[column].to_list()
+    return jsonify({'data': data_dict})
 
 
 @app.route('/api/sensors_geojson')
