@@ -7,6 +7,8 @@
     <script src="{{ url_for('static', filename='js/Chart.bundle.js') }}"></script>
     <script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/raphael.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/justgage.min.js') }}"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
@@ -58,16 +60,21 @@
                         Good
                     </div>
                 </div>
-                <canvas id="soil_humidity_gauge"></canvas>
-                <canvas id="soil_leaching_gauge"></canvas>
+                <h5>Soil Moisture Content</h5>
+                <div id="soil_humidity_gauge"></div>
+                <h5>Soil Leaching Likelihood</h5>
+                <div id="soil_leaching_gauge"></div>
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
-                <canvas id="air_humidity"></canvas>
+            <div class="col-4">
+                <canvas id="soil_humidity_graph"></canvas>
             </div>
-            <div class="col-6">
-                <canvas id="soil_humidity"></canvas>
+            <div class="col-4">
+                <canvas id="soil_temperature_graph"></canvas>
+            </div>
+            <div class="col-4">
+                <canvas id="soil_ph_graph"></canvas>
             </div>
         </div>
 

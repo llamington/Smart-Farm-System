@@ -1,28 +1,27 @@
-get_sensor_data = (period) => {
+get_sensor_data = (sensor_type, period) => {
     return $.ajax({
         url: '/api/sensor_data',
         dataType: 'json',
         type: 'GET',
         data: {
-            period: period
+            period: period,
+            sensor_type: sensor_type
         }
     })
 }
-get_sensor_data(7).done((data) => {insert_line_chart('#air_temperature', data, 'air_temperature')});
-get_sensor_data(7).done((data) => {insert_line_chart('#air_humidity', data, 'air_humidity')})
-get_sensor_data(7).done((data) => {insert_line_chart('#soil_humidity', data, 'soil_humidity')})
-insert_line_chart = (chart_div, json_data, category) => {
+
+insert_line_chart = (chart_div, data, title) => {
     new Chart($(chart_div)[0].getContext('2d'), {
         // The type of chart we want to create
         type: 'line',
         // The data for our dataset
         data: {
-            labels: json_data['data']['date_time'],
+            labels: data['date_time'],
             datasets: [{
-                label: category,
+                label: title,
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: json_data['data'][category]
+                data: data['values']
             }]
         },
 
@@ -30,29 +29,25 @@ insert_line_chart = (chart_div, json_data, category) => {
         options: {}
     });
 }
-insert_gauge_chart = (chart_div, json_data, category) => {
-    new Chart($(chart_div)[0].getContext('2d'), {
-        type: 'doughnut',
 
-        // The data for our dataset
-        data: {
-            labels: ["January", "February", "March", "April", "May"],
-            datasets: [{
-                label: "My First dataset",
-                backgroundColor: ['rgb(0, 99, 132)', 'green', 'red', 'yellow', 'orange'],
-                borderColor: '#fff',
-                data: [5, 10, 5, 2, 20],
-            }]
-        },
-
-        // Configuration options go here
-        options: {
-            circumference: 1 * Math.PI,
-            rotation: 1 * Math.PI,
-            cutoutPercentage: 90
-        }
+insert_gauge_chart = (gauge_div, value) => {
+    new JustGage({
+        id: gauge_div,
+        value: value,
+        min: 0,
+        max: 100,
+        label: 'percent'
     })
 }
+
+get_sensor_data('soil_humidity', 7).done((data) => {insert_line_chart('#soil_humidity_graph', data, 'soil_humidity')})
+get_sensor_data('soil_temperature', 7).done((data) => {insert_line_chart('#soil_temperature_graph', data, 'soil_temperature')})
+get_sensor_data('ph', 7).done((data) => {insert_line_chart('#soil_ph_graph', data, 'Soil pH')})
+get_sensor_data('soil_humidity').done((data) => {insert_gauge_chart('soil_humidity_gauge', data)})
+
+//placeholder leaching likelihood gauge
+insert_gauge_chart('soil_leaching_gauge', 67)
+
 class SensorMap {
     constructor(map_div) {
         console.log(map_div)
