@@ -58,16 +58,12 @@ void loop() {
   digitalWrite(indicatorLed, HIGH);
   digitalWrite(loRaM0, LOW);
   digitalWrite(loRaM1, LOW);
-  //digitalWrite(phRelay, HIGH);
   digitalWrite(batteryTest, LOW);
   phRaw = analogRead(phIn);
   phVoltage = analogVoltage(phRaw);
-  //Serial.println(phVoltage);
   ph = voltageToPh(phVoltage);
-  //Serial.println(ph);
   soilMoistureRaw = analogRead(soilMoistureIn);
   soilRelativeHumidity = map(soilMoistureRaw, 855, 385, 0, 100);
-  //Serial.println(soilMoistureRaw);
   ntcRaw = analogRead(soilTemperatureIn);
   ntcVoltage = analogVoltage(ntcRaw);
   ntcResistance = voltageDividerResistance(ntcVoltage);
@@ -75,24 +71,27 @@ void loop() {
   batteryVoltageRaw = analogRead(batteryRead);
   batteryVoltage = analogVoltage(batteryVoltageRaw);
   batteryPercentage = voltagePercentage(batteryVoltage);
- // Serial.println(batteryPercentage);
-  //Serial.println(soilRelativeHumidity);
   uvIndex = uv.readUVI();
   uvA = uv.readUVA();
   uvB = uv.readUVB();
   temperature = bme.readTemperature();
   humidity = bme.readHumidity();
   pressure = bme.readPressure();
-  //Serial.println(uvB);
-  //Serial.println("T" + temperature + ">");
+  
   float values[] = {humidity, temperature, uvA, uvB, uvIndex, soilRelativeHumidity, soilTemperature, ph, batteryPercentage};
    for(int i = 0; i < 9; i++) {
-    //Serial.println(values[i]);
-    //Serial.print(values[i]);
     value[i] = String(values[i], 1);
-    Serial.println(startDelimiter[i] + value[i] + '>');
-    loRa.print(startDelimiter[i] + value[i] + '>');
+    Serial.println(startDelimiter[i] + value[i]);
+    loRa.print(startDelimiter[i] + value[i]);
   }
+  
+  digitalWrite(indicatorLed, LOW);
+  delay(100);
+  digitalWrite(indicatorLed, HIGH);
+  delay(100);
+  digitalWrite(indicatorLed, LOW);
+  delay(100);
+  digitalWrite(indicatorLed, HIGH);
   delay(60000);
 }
 
