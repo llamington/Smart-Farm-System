@@ -43,15 +43,15 @@
             <div class="col-5 card">
                 <div class="row card-header">
                     <div class="col-6">
-                        <h3>Sensor 1</h3>
+                        <h3 class="mb-0 text-center">Sensor 1</h3>
                     </div>
-                    <div class="col-3">
-                        <i class="fas fa-battery-three-quarters"></i>
-                        68%
+                    <div class="col-3 align-self-center">
+                        <i class="fas fa-battery-three-quarters d-inline"></i>
+                        <p class="d-inline">68%</p>
                     </div>
-                    <div class="col-3">
-                        <i class="fas fa-signal"></i>
-                        Good
+                    <div class="col-3 align-self-center">
+                        <i class="fas fa-signal d-inline"></i>
+                        <p class="d-inline">Good</p>
                     </div>
                 </div>
                 <div class="card-body">
@@ -76,7 +76,10 @@
                 </div>
             </div>
         </div>
-
+        <div class="card">
+            <h3 class="card-header text-center">Ambient Conditions</h3>
+            <div class="row card-body"></div>
+        </div>
 
     </div>
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
