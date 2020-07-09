@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Dashboard</title>
     <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/Chart.bundle.js') }}"></script>
@@ -9,7 +10,9 @@
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/raphael.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/justgage.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/data_visualise.js') }}"></script>
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-grid.css') }}">
@@ -29,54 +32,51 @@
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="{{ url_for('dashboard') }}">Smart Farm System</a>
         <div class="mr-2">
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
-                <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
-            </svg>
+            <i class="fas fa-user-circle"></i>
         </div>
     </nav>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-7">
-                <div id="sensor_map" style="height: 100%"></div>
+        <div class="row p-3 card-group">
+            <div class="card col-7 px-0">
+                <div id="sensor_map" style="height: 100%" class="card-body"></div>
             </div>
-            <div class="col-5">
-                <div class="row">
+            <div class="col-5 card">
+                <div class="row card-header">
                     <div class="col-6">
-                        <h4>Sensor 1</h4>
+                        <h3>Sensor 1</h3>
                     </div>
                     <div class="col-3">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-battery-half" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M12 5H2a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1zM2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2z"/>
-                            <path d="M2 6h5v4H2V6zm12.5 3.5a1.5 1.5 0 0 0 0-3v3z"/>
-                        </svg>
+                        <i class="fas fa-battery-three-quarters"></i>
                         68%
                     </div>
                     <div class="col-3">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reception-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-8zm4 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-                        </svg>
+                        <i class="fas fa-signal"></i>
                         Good
                     </div>
                 </div>
-                <h5>Soil Moisture Content</h5>
-                <div id="soil_humidity_gauge"></div>
-                <h5>Soil Leaching Likelihood</h5>
-                <div id="soil_leaching_gauge"></div>
+                <div class="card-body">
+                    <h5 class="text-center">Soil Moisture Content</h5>
+                    <div id="soil_humidity_gauge"></div>
+                    <h5 class="text-center">Soil Leaching Likelihood</h5>
+                    <div id="soil_leaching_gauge"></div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-4">
-                <canvas id="soil_humidity_graph"></canvas>
-            </div>
-            <div class="col-4">
-                <canvas id="soil_temperature_graph"></canvas>
-            </div>
-            <div class="col-4">
-                <canvas id="soil_ph_graph"></canvas>
+        <div class="card">
+            <h3 class="card-header text-center">Soil Conditions</h3>
+            <div class="row card-body">
+                <div class="col-4">
+                    <canvas id="soil_humidity_graph"></canvas>
+                </div>
+                <div class="col-4">
+                    <canvas id="soil_temperature_graph"></canvas>
+                </div>
+                <div class="col-4">
+                    <canvas id="soil_ph_graph"></canvas>
+                </div>
             </div>
         </div>
+
 
     </div>
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
