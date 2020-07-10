@@ -54,3 +54,8 @@
 * Adjust voltage divider for PV
 * Solar MOSFET wrong way
 * Potentially use ATSAMD21G18 for debugging/similar power/greater storage
+
+
+* Adjust voltage divider for PV
+* Solar MOSFET wrong way
+* Potentially use ATSAMD21G18 for debugging/similar power/greater storage

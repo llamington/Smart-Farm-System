@@ -56,13 +56,14 @@ def get_sensor_data():
     """fetches sensor data from the database"""
     period = request.args.get('period')
     sensor_type = request.args.get('sensor_type')
+    sensor_id = request.args.get('sensor_id')
     if period:
-        df = db.select_days_prior(period, sensor_type)
+        df = db.select_days_prior(period, sensor_type, sensor_id)
         df['date_time'] = df['date_time'].dt.strftime('%Y-%m-%d')
         data_dict = {'values': df[sensor_type].to_list(), 'date_time': df['date_time'].to_list()}
         return jsonify(data_dict)
     else:
-        return jsonify(db.get_latest_value(sensor_type))
+        return jsonify(db.get_latest_value(sensor_type, sensor_id))
 
 
 @app.route('/api/sensors_geojson')

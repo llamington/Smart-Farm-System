@@ -53,8 +53,10 @@ class SensorMap {
         })
         this.tile_layer.addTo(this.sensor_map);
     }
-    insert_geojson(geojson_object) {
-        L.geoJSON(geojson_object).addTo(this.sensor_map)
+    insert_geojson(geojson_object, on_click_function) {
+        L.geoJSON(geojson_object, {onEachFeature: (feature, layer) => {
+                layer.on({click: on_click_function})
+            }}).addTo(this.sensor_map)
     }
 }
 
@@ -79,7 +81,7 @@ insert_line_chart = (chart_div, data, title) => {
 }
 
 insert_gauge_chart = (gauge_div, value, sectors) => {
-    new JustGage({
+        return new JustGage({
         id: gauge_div,
         value: value,
         min: 0,
