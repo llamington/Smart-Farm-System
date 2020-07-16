@@ -34,6 +34,9 @@ sensors_geojson_promise.done((data) => {
 
 on_click_function = (event) => {
     let sensor_id = event.target.feature.properties.id
+    $("#sensor_id").text(`Sensor ${sensor_id}`)
+    $("#battery_percentage").text()
+    get_sensor_data('battery_percentage', sensor_id).done((data) => {$("#battery_percentage").text(`${data}%`)})
     get_sensor_data('soil_humidity', sensor_id, 7).done((data) => {insert_line_chart('#soil_humidity_graph', data, 'soil_humidity')})
     get_sensor_data('soil_temperature', sensor_id, 7).done((data) => {insert_line_chart('#soil_temperature_graph', data, 'soil_temperature')})
     get_sensor_data('ph', sensor_id, 7).done((data) => {insert_line_chart('#soil_ph_graph', data, 'Soil pH')})

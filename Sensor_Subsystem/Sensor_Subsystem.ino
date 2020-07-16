@@ -16,6 +16,7 @@ const int soilTemperatureIn = A1;
 const int batteryTest = 3;
 const int batteryRead = A3;
 const int indicatorLed = 7;
+const int phMosfet = 2;
 int soilMoistureRaw;
 float soilRelativeHumidity;
 int phRaw;
@@ -60,7 +61,10 @@ void loop() {
   digitalWrite(loRaM1, LOW);
   //digitalWrite(phRelay, HIGH);
   digitalWrite(batteryTest, LOW);
+  digitalWrite(phMosfet, HIGH);
+  delay(200);
   phRaw = analogRead(phIn);
+  digitalWrite(phMosfet, LOW);
   phVoltage = analogVoltage(phRaw);
   //Serial.println(phVoltage);
   ph = voltageToPh(phVoltage);

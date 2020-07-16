@@ -70,5 +70,8 @@ def get_sensor_data():
 def sensors_geojson():
     sensor_geodict = db.get_sensor_geodict()
     return jsonify(sensor_geodict)
-# if __name__ == 'main':
+
+
+# if __name__ == 'app':
+#     print('hello')
 #     app.run(host='0.0.0.0')
