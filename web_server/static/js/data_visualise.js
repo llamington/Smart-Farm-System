@@ -1,22 +1,26 @@
+const red = "#d9534f"
+const orange = "#f0ad4e"
+const green = "#5cb85c"
+
 const soil_moisture_sectors = {
     percents: true,
     ranges: [{
-        color : "#d9534f",
+        color : red,
         lo : 0,
         hi : 25
     },
     {
-        color: "#f0ad4e",
+        color: orange,
         lo: 25,
         hi: 50
     },
     {
-        color : "#5cb85c",
+        color : green,
         lo : 50,
         hi : 75
     },
     {
-        color : "#d9534f",
+        color : red,
         lo : 75,
         hi : Infinity
     }]
@@ -25,17 +29,17 @@ const soil_moisture_sectors = {
 const soil_leaching_sectors = {
     percents: true,
     ranges: [{
-        color : "#d9534f",
+        color : red,
         lo : 80,
         hi : 100
     },
     {
-        color: "#f0ad4e",
+        color: orange,
         lo: 60,
         hi: 80
     },
     {
-        color: "#5cb85c",
+        color: green,
         lo: 0,
         hi: 60
     }]
@@ -69,14 +73,16 @@ insert_line_chart = (chart_div, data, title) => {
             labels: data['date_time'],
             datasets: [{
                 label: title,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: green,
+                borderColor: green,
                 data: data['values']
             }]
         },
 
         // Configuration options go here
-        options: {}
+        options: {
+            spanGaps: true //possibly turn this off once consistent data is gained
+        }
     });
 }
 

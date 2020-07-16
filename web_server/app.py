@@ -59,8 +59,8 @@ def get_sensor_data():
     sensor_id = request.args.get('sensor_id')
     if period:
         df = db.select_days_prior(period, sensor_type, sensor_id)
-        df['date_time'] = df['date_time'].dt.strftime('%Y-%m-%d')
-        data_dict = {'values': df[sensor_type].to_list(), 'date_time': df['date_time'].to_list()}
+        df.index = df.index.strftime('%Y-%m-%d')
+        data_dict = {'values': df[sensor_type].to_list(), 'date_time': df.index.to_list()}
         return jsonify(data_dict)
     else:
         return jsonify(db.get_latest_value(sensor_type, sensor_id))

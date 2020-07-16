@@ -13,9 +13,9 @@ get_sensor_data = (sensor_type, sensor_id, period=null) => {
 let soil_humidity_gauge;
 let soil_leaching_gauge;
 
-get_sensor_data('soil_humidity', 1, 7).done((data) => {insert_line_chart('#soil_humidity_graph', data, 'soil_humidity')})
-get_sensor_data('soil_temperature', 1, 7).done((data) => {insert_line_chart('#soil_temperature_graph', data, 'soil_temperature')})
-get_sensor_data('ph', 1, 7).done((data) => {insert_line_chart('#soil_ph_graph', data, 'Soil pH')})
+get_sensor_data('soil_humidity', 1, 20).done((data) => {insert_line_chart('#soil_humidity_graph', data, 'soil_humidity')})
+get_sensor_data('soil_temperature', 1, 20).done((data) => {insert_line_chart('#soil_temperature_graph', data, 'soil_temperature')})
+get_sensor_data('ph', 1, 20).done((data) => {insert_line_chart('#soil_ph_graph', data, 'Soil pH')})
 get_sensor_data('soil_humidity', 1).done((data) => {soil_humidity_gauge = insert_gauge_chart('soil_humidity_gauge', data, soil_moisture_sectors)})
 
 //placeholder leaching likelihood gauge

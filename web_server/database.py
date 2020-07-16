@@ -14,8 +14,9 @@ class Database:
     def select_days_prior(self, num_days, sensor_type, sensor_id):
         sql_str = f'''SELECT {sensor_type}, date_time FROM sensor_data
             WHERE date_time BETWEEN date_sub(now(),INTERVAL {num_days} DAY) AND now() AND sensor_id = {sensor_id};'''
-        selected_days = pd.read_sql_query(sql_str, self.engine, parse_dates=['date_time'])
-        return selected_days
+        selected_days = pd.read_sql_query(sql_str, self.engine, parse_dates=['date_time'], index_col='date_time')
+        selected_days = selected_days.resample('D').mean().round(1)
+        return selected_days.where(selected_days.notnull(), None)
 
     def get_sensor_geodict(self):
         df = pd.read_sql_table('sensors', self.engine, index_col='sensor_id')
